@@ -11,11 +11,11 @@
     thisController.searchTerm = "";
     thisController.found = [];
     thisController.search = function(){
-      // MenuSearchService.getMatchedMenuItems(thisController.searchTerm).then(function(result){
-      //   thisController.found = result;
-      // });
-      alert("this should be last");
-      thisController.found = MenuSearchService.getMatchedMenuItems(thisController.searchTerm);
+      MenuSearchService.getMatchedMenuItems(thisController.searchTerm).then(function(result){
+        thisController.found = result;
+      });
+      // alert("this should be last");
+      // thisController.found = MenuSearchService.getMatchedMenuItems(thisController.searchTerm);
     };
     thisController.removeItem = function(index){
       alert(index);
@@ -30,29 +30,32 @@
     thisService.found = [];
 
     thisService.getMatchedMenuItems = function(searchTerm){
-      if(thisService.allMenuItems.length){
-        // debugger;
-        thisService.found = filter(searchTerm, thisService.allMenuItems);
-        // return Promise.resolve(thisService.found);
-        return thisService.found;
-      }
-      else{
-        // debugger;
-        thisService.getAllMenuItems().then(function(result){
+      // if(thisService.allMenuItems.length){
+      //   // debugger;
+      //   thisService.found = filter(searchTerm, thisService.allMenuItems);
+      //   // return Promise.resolve(thisService.found);
+      //   return thisService.found;
+      // }
+      // else{
+      //   // debugger;
+      //   thisService.getAllMenuItems().then(function(result){
+      //     thisService.found = filter(searchTerm, thisService.allMenuItems);
+      //     alert(thisService.found);
+      //     return thisService.found;
+      //   });
+      // } 
+
+        return thisService.getAllMenuItems().then(function(result){
           thisService.found = filter(searchTerm, thisService.allMenuItems);
-          alert(thisService.found);
+          // alert(thisService.found);
           return thisService.found;
-        });
-      }  
+        }); 
       
     };
 
     thisService.getAllMenuItems = function(){
 
-      return $http({
-        method: 'GET',
-        url: 'https://davids-restaurant.herokuapp.com/menu_items.json'
-      }).then(function (result) {
+      return $http.get('https://davids-restaurant.herokuapp.com/menu_items.json', {cache: true}).then(function (result) {
         thisService.allMenuItems = result.data.menu_items;
 
         // return processed items
