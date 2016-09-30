@@ -10,6 +10,7 @@
   </head>
 <body ng-app="NarrowItDownApp">
    <div class="container" ng-controller="NarrowItDownController as narrowItDownCtrl">
+    <div>
     <h1>Narrow Down Your Chinese Menu Choice</h1>
 
     <div class="form-group">
@@ -19,11 +20,26 @@
       <button class="btn btn-primary" ng-click="narrowItDownCtrl.search();">Narrow It Down For Me!</button>
     </div>
 
+
     <!-- Bonus loader (see Bonus section of the assignment) -->
     <items-loader-indicator></items-loader-indicator>
+    </div>
 
     <!-- found-items should be implemented as a component -->
-    <found-items></found-items>
+    <div class="row" style="float: left;">
+      <!--<table class="table table-bordered table-stripe">
+        <thead>
+          <th>#</th>
+          <th>Name</th>
+          <th>Description</th>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>-->
+      <found-items arr="narrowItDownCtrl.found" on-remove="narrowItDownCtrl.removeItem(index)"></found-items>  
+    </div>
+    
   </div>
 
 </body>
