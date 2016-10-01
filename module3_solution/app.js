@@ -3,6 +3,7 @@
   NarrowItDownApp.controller('NarrowItDownController', NarrowItDownController);
   NarrowItDownApp.service('MenuSearchService', MenuSearchService);
   NarrowItDownApp.directive('foundItems', FoundItems);
+  NarrowItDownApp.directive('itemsLoaderIndicator', ItemsLoaderIndicator);
 
   NarrowItDownController.$inject = ["MenuSearchService"];
   function NarrowItDownController(MenuSearchService){
@@ -10,9 +11,12 @@
 
     thisController.searchTerm = "";
     thisController.found = [];
+    thisController.loading = false;
     thisController.search = function(){
+      thisController.loading = true;
       MenuSearchService.getMatchedMenuItems(thisController.searchTerm).then(function(result){
         thisController.found = result;
+        thisController.loading = false;
       });
     };
     thisController.removeItem = function(index){
@@ -66,6 +70,14 @@
         onRemove: '&'
       },
       template: "<p ng-repeat='item in found'><b>#:</b>{{$index+1}}, <b>Name:</b> {{ item.name }}, <b>Description:</b> {{ item.description }}. <button ng-click='onRemove({index: $index});'>Don't want this one!</button></p><br><br><p style='float: left;' ng-hide='found.length'>Nothing found</p>"
+    }
+
+    return ddo;
+  }
+
+  function ItemsLoaderIndicator(){
+    var ddo = {
+      template: "<div class='loader'>Loading...</div>"
     }
 
     return ddo;
