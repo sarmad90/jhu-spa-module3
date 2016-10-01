@@ -14,11 +14,9 @@
       MenuSearchService.getMatchedMenuItems(thisController.searchTerm).then(function(result){
         thisController.found = result;
       });
-      // alert("this should be last");
-      // thisController.found = MenuSearchService.getMatchedMenuItems(thisController.searchTerm);
     };
     thisController.removeItem = function(index){
-      alert(index);
+      thisController.found.splice(index, 1);
     };
   };
 
@@ -30,24 +28,8 @@
     thisService.found = [];
 
     thisService.getMatchedMenuItems = function(searchTerm){
-      // if(thisService.allMenuItems.length){
-      //   // debugger;
-      //   thisService.found = filter(searchTerm, thisService.allMenuItems);
-      //   // return Promise.resolve(thisService.found);
-      //   return thisService.found;
-      // }
-      // else{
-      //   // debugger;
-      //   thisService.getAllMenuItems().then(function(result){
-      //     thisService.found = filter(searchTerm, thisService.allMenuItems);
-      //     alert(thisService.found);
-      //     return thisService.found;
-      //   });
-      // } 
-
         return thisService.getAllMenuItems().then(function(result){
           thisService.found = filter(searchTerm, thisService.allMenuItems);
-          // alert(thisService.found);
           return thisService.found;
         }); 
       
@@ -83,7 +65,7 @@
         found: '=arr',
         onRemove: '&'
       },
-      template: "<p ng-repeat='item in found'><b>#:</b>{{$index+1}}, <b>Name:</b> {{ item.name }}, <b>Description:</b> {{ item.description }}. <button ng-click='onRemove({index: $index});'>Remove</button></p>"
+      template: "<p ng-repeat='item in found'><b>#:</b>{{$index+1}}, <b>Name:</b> {{ item.name }}, <b>Description:</b> {{ item.description }}. <button ng-click='onRemove({index: $index});'>Don't want this one!</button></p><br><br><p style='float: left;' ng-hide='found.length'>Nothing found</p>"
     }
 
     return ddo;
