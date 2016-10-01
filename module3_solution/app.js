@@ -14,8 +14,11 @@
     thisController.loading = false;
     thisController.search = function(){
       thisController.loading = true;
+      thisController.found = [];
       MenuSearchService.getMatchedMenuItems(thisController.searchTerm).then(function(result){
-        thisController.found = result;
+        if(thisController.searchTerm != ""){
+          thisController.found = result;  
+        }
         thisController.loading = false;
       });
     };
@@ -69,7 +72,7 @@
         found: '=arr',
         onRemove: '&'
       },
-      template: "<p ng-repeat='item in found'><b>#:</b>{{$index+1}}, <b>Name:</b> {{ item.name }}, <b>Description:</b> {{ item.description }}. <button ng-click='onRemove({index: $index});'>Don't want this one!</button></p><br><br><p style='float: left;' ng-hide='found.length'>Nothing found</p>"
+      template: "<p ng-repeat='item in found'><b>#:</b>{{$index+1}},<b>Short Name:</b> {{item.short_name}} , <b>Name:</b> {{ item.name }}, <b>Description:</b> {{ item.description }}. <button ng-click='onRemove({index: $index});'>Don't want this one!</button></p><br><br><p style='float: left;' ng-hide='found.length'>Nothing found</p>"
     }
 
     return ddo;
